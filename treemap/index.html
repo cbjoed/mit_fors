@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Treemap Example</title>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <style>
+    /* Define CSS styles for the treemap */
+    .node {
+      position: absolute;
+      border: 1px solid #e10e0e;
+      font-size: 12px;
+      text-align: center;
+    }
+
+    .node:hover {
+      opacity: 0.5;
+    }
+
+    .treemap {
+      position: relative;
+      width: 500px;
+      height: 300px;
+      margin: 20px auto;
+      border: 1px solid #5a00eb;
+    }
+  </style>
+</head>
+<body>
+  <div class="treemap"></div>
+
+  <script>
+    // Define the data for the treemap
+    const data = {
+  name: "CO2 pr. måned i kg",
+  children: [
+    {
+      name: "Google",
+      value: 3544800
+    },
+    {
+      name: "Youtube",
+      value: 22507800
+    },
+    {
+      name: "Facebook",
+      value: 1760000
+    },
+    {
+      name: "Twitter",
+      value: 5290400
+    },
+    {
+      name: "Instagram",
+      value: 3275730
+    },
+    {
+      name: "Baidu",
+      value: 642720
+    },
+    {
+      name: "Wikipedia",
+      value: 94680
+    },
+    {
+      name: "Dzen Russia",
+      value: 2410600
+    },
+    {
+      name: "Yahoo",
+      value: 1155320
+    },
+    {
+      name: "Whatsapp",
+      value: 1668700
+    },
+    {
+      name: "xVideos",
+      value: 1087560
+    },
+    {
+      name: "Pornhub",
+      value: 1605240
+    },
+    {
+      name: "Amazon",
+      value: 2075920
+    },
+    {
+      name: "Xnxx",
+      value: 638680
+    },
+    {
+      name: "Live",
+      value: 1212400
+    },
+    {
+      name: "Tiktok",
+      value: 2440000
+    },
+    {
+      name: "Docomo Japanese",
+      value: 2708820
+    },
+    {
+      name: "Yahoo Japanese",
+      value: 604860
+    },
+    {
+      name: "LinkedIn",
+      value: 193710
+    },
+    {
+      name: "Reddit",
+      value: 2262000
+    },
+    {
+      name: "OpenAI",
+      value: 5880420
+    },
+    {
+      name: "Microsoft Office",
+      value: 3264240
+    },
+    {
+      name: "Netflix",
+      value: 720960
+    },
+    {
+      name: "Mail Russia",
+      value: 1422160
+    },
+    {
+      name: "Naver",
+      value: 1388520
+    },
+    {
+      name: "Turbopages",
+      value: 81270
+    },
+    {
+      name: "The Weather Channel",
+      value: 747780
+    },
+    {
+      name: "Discord",
+      value: 687470
+    },
+    {
+      name: "Twitch",
+      value: 1928500
+    },
+    {
+      name: "Pinterest",
+      value: 4141800
+    },
+    {
+      name: "Bilibili",
+      value: 543200
+    },
+    {
+      name: "Microsoft",
+      value: 190400
+    },
+    {
+      name: "Zoom",
+      value: 1178750
+    },
+    {
+      name: "DuckDuckGo",
+      value: 85920
+    },
+    {
+      name: "QQ",
+      value: 309209
+    },
+    {
+      name: "Quora",
+      value: 411009
+    },
+    {
+      name: "Roblox",
+      value: 409989
+    },
+    {
+      name: "MSN",
+      value: 451260
+    },
+    {
+      name: "Fandom",
+      value: 837558
+    },
+    {
+      name: "Ebay",
+      value: 505011
+    },
+    {
+      name: "Aajtak India",
+      value: 1658008
+    },
+    {
+      name: "Globo",
+      value: 822324
+    },
+
+      ]
+    };
+
+    // Create the treemap using D3.js
+    const treemap = d3.treemap()
+      .size([700, 500])
+      .padding(4);
+
+    const root = d3.hierarchy(data)
+      .sum(function(d) { return d.value; })
+      .sort(function(a, b) { return b.value - a.value; });
+
+    treemap(root);
+
+    const color = d3.scaleOrdinal()
+  .domain(["A", "B", "C"])
+  .range(["#98abc5", "#8a89a6", "#7b6888"]);
+
+
+    d3.select(".treemap")
+      .selectAll(".node")
+      .data(root.leaves())
+      .enter().append("div")
+      .attr("class", "node")
+      .style("left", function(d) { return d.x0 + "px"; })
+      .style("top", function(d) { return d.y0 + "px"; })
+      .style("width", function(d) { return d.x1 - d.x0 + "px"; })
+      .style("height", function(d) { return d.y1 - d.y0 + "px"; })
+      .style("background-color", function(d) { return color(d.parent.data.name); })
+      .text(function(d) { return d.data.name; });
+  </script>
+</body>
+</html>
